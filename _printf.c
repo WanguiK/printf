@@ -3,7 +3,7 @@
 #include "main.h"
 
 /**
- * _printf- produces output according to a format
+ * _printf - produces output according to a format
  * @format: character string
  *
  * Return: number of characters printed
@@ -11,10 +11,8 @@
 int _printf(const char *format, ...)
 {
 	int count = 0;
-	char c;
-	const char *s;
 
-	va_list ap;
+	va_list(ap);
 
 	va_start(ap, format);
 
@@ -23,35 +21,18 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-
-			switch (*format)
+			if (*format == 'd' || *format == 'i')
 			{
-				case 'c':
-				c = (char)va_arg(ap, int);
-				putchar(c);
-				count++;
-				break;
+				int num = va_arg(ap, int);
 
-				case 's':
-				s = va_arg(ap, const char *);
-				while (*s != '\0')
-				{
-					putchar(*s);
-					s++;
-					count++;
-				}
-				break;
-
-				case '%':
-				putchar('%');
+				printf("%d", num);
 				count++;
-				break;
 			}
-		}
 		else
 		{
 			putchar(*format);
 			count++;
+		}
 		}
 		format++;
 	}
