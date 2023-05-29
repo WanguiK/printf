@@ -37,7 +37,6 @@ int _printf(const char *format, ...)
 				while (*s != '\0')
 				{
 					putchar(*s);
-					putchar('\n');
 					s++;
 					count++;
 				}
