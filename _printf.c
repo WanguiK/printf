@@ -12,6 +12,7 @@ int _printf(const char *format, ...)
 {
 	int count = 0;
 	char c;
+	int i;
 	const char *s;
 
 	va_list ap;
@@ -46,6 +47,15 @@ int _printf(const char *format, ...)
 				putchar('%');
 				count++;
 				break;
+
+				case 'd':
+				case 'i':
+				{
+				i = va_arg(ap, int);
+				putchar(i);
+				count++;
+				break;
+
 			}
 		}
 		else
