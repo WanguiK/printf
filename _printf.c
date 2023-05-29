@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdarg.h>
 #include "main.h"
+#include <stdarg.h>
 
 /**
  * _printf-  produces output according to a format
@@ -8,13 +7,13 @@
  *
  * Return: Number of characters printed
  */
-int _printf(const char *format, ...);
+int _printf(const char *format, ...)
 {
+	int count = 0;
+
 	va_list ap;
 
 	va_start(ap, format);
-
-	int count = 0;
 
 	while (*format != '\0')
 	{
