@@ -12,7 +12,6 @@ int _printf(const char *format, ...)
 {
 	int count = 0;
 	char c;
-	int i;
 	const char *s;
 
 	va_list ap;
