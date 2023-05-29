@@ -47,15 +47,6 @@ int _printf(const char *format, ...)
 				putchar('%');
 				count++;
 				break;
-
-				case 'd':
-				case 'i':
-				{
-				i = va_arg(ap, int);
-				putchar(i);
-				count++;
-				break;
-
 			}
 		}
 		else
