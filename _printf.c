@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include "main.h"
 
 /**
  * _printf- produces output according to a format
@@ -9,12 +10,12 @@
  */
 int _printf(const char *format, ...)
 {
+	int count = 0;
+        char c;
+        const char *s;
+
 	va_list ap;
 	va_start(ap, format);
-
-	int count = 0;
-	char c;
-	const char *s;
 
 	while (*format != '\0')
 	{
@@ -53,6 +54,6 @@ int _printf(const char *format, ...)
 		}
 		format++;
 	}	
-	va_end(args);
+	va_end(ap);
 	return (count);
 }
