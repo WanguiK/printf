@@ -1,52 +1,53 @@
-#include <stdarg.h>
-#include <unistd.h>
 #include "main.h"
+#include <stdarg.h>
+#include <stdio.h>
 
 /**
- * _printf- produces output according to a format
+ * _printf - produces output according to a format
  * @format: Character string
  *
- * Return: Number of characters printed (excluding null byte)
+ * Return: number of characters printed (excluding the null byte)
  */
-int _printf(const char *format, ...)
+int _printf(const char * const format, ...)
 {
+	convert_match m[] = {
+		{"%s", printf_string}, {"%c", printf_char},
+		{"%%", printf_37},
+		{"%i", printf_int}, {"%d", printf_dec}, {"%r", printf_srev},
+		{"%R", printf_rot13}, {"%b", printf_bin}, {"%u", printf_unsigned},
+		{"%o", printf_oct}, {"%x", printf_hex}, {"%X", printf_HEX},
+		{"%S", printf_exclusive_string}, {"%p", printf_pointer}
+	};
+
 	va_list args;
-	int count = 0;
-	const char *ptr;
+	int i = 0, j, len = 0;
 
 	va_start(args, format);
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
 
-	for (ptr = format; *ptr != '\0'; ptr++)
+	while (format[i] != '\0')
 	{
-		if (*ptr == '%')
+		if (format[i] == '%')
 		{
-			ptr++;
-			if (*ptr == 'c')
+			j = 0;
+			while (j < 14)
 			{
-				int c = va_arg(args, int);
-
-				count += write(1, &c, 1);
+				if (format[i + 1] == m[j].id[1])
+				{
+					len += m[j].f(args);
+					i += 2;
+					break;
+				}
+				j++;
 			}
-			else if (*ptr == 's')
-			{
-				char *s = va_arg(args, char *);
-
-				int len = 0;
-
-				while (s[len] != '\0')
-					len++;
-				count += write(1, s, len);
-			}
-			else if (*ptr == '%')
-			{
-				count += write(1, "%", 1);
-			}
+			if (j == 14)
+				len += _putchar(format[i++]);
 		}
 		else
-		{
-			count += write(1, ptr, 1);
-		}
+			len += _putchar(format[i++]);
 	}
+
 	va_end(args);
-	return (count);
+	return (len);
 }
