@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 
-int _print_int(int num);
 int _printf(const char *format, ...);
 
 int _putchar(char c);

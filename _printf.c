@@ -2,8 +2,8 @@
 #include <unistd.h>
 
 /**
- * _printf - Custom printf function
- * @format: Format string
+ * _printf- produces output according to a format
+ * @format: Character string
  *
  * Return: Number of characters printed (excluding null byte)
  */
