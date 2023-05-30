@@ -1,11 +1,8 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /**
- * printf_hex_aux - prints an hexdecimal number
- * @num: arguments
- *
+ * printf_hex_aux - prints a hexdecimal number.
+ * @num: arguments.
  * Return: counter.
  */
 int printf_hex_aux(unsigned long int num)
