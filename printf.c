@@ -25,8 +25,8 @@ int _printf(const char *format, ...)
 			switch (*format)
 			{
 				case 'c':
-				c = (char)va_arg(ap, int);
-				putchar(c);
+				c = va_arg(ap, int);
+				_putchar(c);
 				count++;
 				break;
 
@@ -34,22 +34,22 @@ int _printf(const char *format, ...)
 				s = va_arg(ap, const char *);
 				while (*s != '\0')
 				{
-					putchar(*s);
+					_putchar(*s);
 					s++;
 					count++;
 				}
 				break;
 
 				case '%':
-				putchar('%');
+				_putchar('%');
 				count++;
 				break;
 			}
+		}
 		else
 		{
-			putchar(*format);
+			_putchar(*format);
 			count++;
-		}
 		}
 		format++;
 	}
