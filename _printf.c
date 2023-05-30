@@ -1,72 +1,51 @@
 #include <stdarg.h>
-#include <stdio.h>
-#include "main.h"
+#include <unistd.h>
 
 /**
- * _printf - produces output according to a format
- * @format: character string
- * Return: number of characters printed
+ * _printf - Custom printf function
+ * @format: Format string
+ *
+ * Return: Number of characters printed (excluding null byte)
  */
 int _printf(const char *format, ...)
 {
+	va_list args;
 	int count = 0;
+	const char *ptr;
 
-	va_list(ap);
+	va_start(args, format);
 
-	if (format == NULL)
+	for (ptr = format; *ptr != '\0'; ptr++)
 	{
-		return (-1);
-	}
-
-	va_start(ap, format);
-
-	while (*format != '\0')
-	{
-		if (*format != '%')
+		if (*ptr == '%')
 		{
-			_putchar(*format);
-			count++;
+			ptr++;
+			if (*ptr == 'c')
+			{
+				int c = va_arg(args, int);
+
+				count += write(1, &c, 1);
+			}
+			else if (*ptr == 's')
+			{
+				char *s = va_arg(args, char *);
+
+				int len = 0;
+
+				while (s[len] != '\0')
+					len++;
+				count += write(1, s, len);
+			}
+			else if (*ptr == '%')
+			{
+				count += write(1, "%", 1);
+			}
 		}
 		else
 		{
-			format++;
-			if (*format == '%')
-			{
-				_putchar('%');
-				count++;
-			}
-			else if (*format == 'c')
-			{
-				char c = va_arg(ap, int);
-
-				_putchar(c);
-				count++;
-			}
-			else if (*format == 's')
-			{
-				const char *s = va_arg(ap, const char *);
-
-				while (*s != '\0')
-				{
-					_putchar(*s);
-					s++;
-					count++;
-				}
-			}
-			else if (*format == 'd' || *format == 'i')
-			{
-				int num = va_arg(ap, int);
-
-				if (num < 0)
-				{
-					_putchar('-');
-					count++;
-					num = -num;
-				}
-			}
+			count += write(1, ptr, 1);
 		}
-		format++;
 	}
-	va_end(ap);
+	va_end(args);
 	return (count);
 }
