@@ -50,16 +50,6 @@ int _printf(const char *format, ...)
 					count++;
 				}
 			}
-			else if (* format == 'd' || *format == 'i')
-			{
-				int num = va_arg(ap, int);
-				if (num < 0)
-				{
-					_putchar('-');
-					count++;
-					num = -num;
-				}
-			}
 		}
 		format++;
 	}
