@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdarg.h>
 #include "main.h"
+#include <stdarg.h>
+#include <stdio.h>
 
 /**
  * _printf - produces output according to a format
@@ -11,7 +11,8 @@
 int _printf(const char *format, ...)
 {
 	int count = 0;
-
+	char c;
+	const char *s;
 	va_list(ap);
 
 	va_start(ap, format);
@@ -21,12 +22,28 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format == 'd' || *format == 'i')
+			switch (*format)
 			{
-				int num = va_arg(ap, int);
-
-				printf("%d", num);
+				case 'c':
+				c = (char)va_arg(ap, int);
+				putchar(c);
 				count++;
+				break;
+
+				case 's':
+				s = va_arg(ap, const char *);
+				while (*s != '\0')
+				{
+					putchar(*s);
+					s++;
+					count++;
+				}
+				break;
+
+				case '%':
+				putchar('%');
+				count++;
+				break;
 			}
 		else
 		{
