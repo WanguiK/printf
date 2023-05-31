@@ -51,3 +51,33 @@ int _printf(const char * const format, ...)
 	va_end(args);
 	return (len);
 }
+/**
+ * handle_conversion_specifier - handles conversion specifier and associated flags
+ * @format: Character string
+ * @index: Pointer to the current index in the format string
+ * @args: Arguments list
+ * @m: Array of conversion specifiers and their corresponding functions
+ *
+ * Return: Number of characters printed for the conversion specifier
+ */
+int handle_conversion_specifier(const char *format, int *index, va_list args, convert_match *m)
+{
+	int j;
+
+	for (j = 0; j < 14; j++)
+	{
+		if (format[*index + 1] == m[j].id[1])
+		{
+			int len = m[j].f(args);
+			*index += 2;
+			return len;
+		}
+	}
+
+	/* Check for flag characters */
+	if (j == 14) {
+		return handle_flag_characters(format, index, args);
+	}
+
+	return 0;
+}
